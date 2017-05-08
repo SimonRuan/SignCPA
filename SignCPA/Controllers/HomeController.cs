@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SignCPA.DAL;
 using SignCPA.Models;
+using SignCPA.Helper;
 
 namespace SignCPA.Controllers
 {
@@ -33,10 +34,7 @@ namespace SignCPA.Controllers
             }
             sign.SignTime = sign.CreateTime = sign.ModifyTime = time.ToString("yyyy-MM-dd HH:mm:ss");
             sign.Content = sign.Content ?? "";
-            string color;
-            switch(sign.DoneLevel)
-                case 0:
-                    color=
+            sign.Color = EnumHelper.ToColor(sign.DoneLevel);
             var res = signDal.AddSign(sign);
             if (res > 0)
             {

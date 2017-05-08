@@ -22,10 +22,10 @@
                 <form role="form">
                     <div class="form-group">
                         <select id="doneLevelTxt" class="form-control">
-                            <option value="0" style="color: red"> 一点都没看...</option>
-                            <option value="1" style="color: orange"> 完成了一部分</option>
-                            <option value="2" style="color: green" selected> 全部完成^_^</option>
-                            <option value="3" style="color: purple"> 超额完成了哦!</option>
+                            <option value="0" style="color: #FF6666"> 一点都没看...</option>
+                            <option value="1" style="color: #FF9999"> 完成了一部分</option>
+                            <option value="2" style="color: #99CC66" selected> 全部完成^_^</option>
+                            <option value="3" style="color: #CCCCFF"> 超额完成了哦!</option>
                         </select>
 
                         <textarea id="contentTxt" class="form-control" style="margin-top: 5px" rows="3" placeholder="小仙女辛苦了，记录一下今天的任务吧"></textarea>
@@ -44,33 +44,29 @@
 </div>
 
 
-<div id="signList" ng-controller="SignListController" style="display:hi">
+<div id="signList" ng-controller="SignListController" style="display: ">
     skldjflskjdfljjslfjk
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>
-                    内容
-                </th>
-                <th>
-                    完成情况
-                </th>
-                <th>
                     打卡日期
                 </th>
+                <th>
+                    内容
+                </th>
+
+
             </tr>
         </thead>
-        <tr ng-repeat="item in SignList " style="background-color:">
-
-            <td>
-                {{item.Content}}asdad
-            </td>
-            <td style="vertical-align:middle">
-                {{item.DoneLevel}}
-            </td>
+        <tr ng-repeat="item in SignList " style="background-color:{{item.Color}}">
             <td style="vertical-align:middle">
                 {{item.ModifyTime}}
             </td>
+            <td>
+                {{item.Content}}
+            </td>
+
         </tr>
     </table>
 
