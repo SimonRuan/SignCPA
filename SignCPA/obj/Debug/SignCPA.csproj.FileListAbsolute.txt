@@ -171,6 +171,5 @@ E:\SignCPA\SignCPA\bin\ko\System.Spatial.resources.dll
 E:\SignCPA\SignCPA\bin\ru\System.Spatial.resources.dll
 E:\SignCPA\SignCPA\bin\zh-Hans\System.Spatial.resources.dll
 E:\SignCPA\SignCPA\bin\zh-Hant\System.Spatial.resources.dll
-E:\SignCPA\SignCPA\obj\Debug\SignCPA.csprojResolveAssemblyReference.cache
 E:\SignCPA\SignCPA\obj\Debug\SignCPA.dll
 E:\SignCPA\SignCPA\obj\Debug\SignCPA.pdb

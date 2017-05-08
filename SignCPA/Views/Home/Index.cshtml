@@ -1,3 +1,77 @@
-﻿<div>
-    <button class="btn  btn-success">打卡 </button>
+﻿<style type="text/css">
+    * {
+        font-family: MicroSoft YaHei;
+    }
+</style>
+
+<center><button class="btn  btn-success btn-lg" data-toggle="modal" data-target="#signDetail" style="width: 50%; text-align: center; margin-top: 10px; margin-bottom: 5px;">打卡</button></center>
+
+<center><button class="btn btn-info btn-lg" style="width: 50%; text-align: center">补打</button></center>
+<div class="modal fade" id="signDetail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    小仙女
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <select id="doneLevelTxt" class="form-control">
+                            <option value="0" style="color: red"> 一点都没完成</option>
+                            <option value="1" style="color: orange"> 就完成了一点点</option>
+                            <option value="2" style="color: greenyellow"> 完成一半吧</option>
+                            <option value="3" style="color: yellowgreen"> 完成了一大半</option>
+                            <option value="4" style="color: green" selected> 全部完成!</option>
+                            <option value="5" style="color: purple"> 超额完成了哦</option>
+                        </select>
+
+                        <textarea id="contentTxt" class="form-control" style="margin-top: 5px" rows="3" placeholder="小仙女辛苦了，记录一下今天的任务吧"></textarea>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="addSign()">
+                    提交更改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+
 </div>
+
+
+<script type="text/javascript">
+
+    function addSign() {
+        var doneLevel = $("#doneLevelTxt").val();
+        var content = $("#contentTxt").val();
+        var sign = {};
+        sign.DoneLevel = doneLevel;
+        sign.Content = content;
+
+        $.ajax({
+            url:'@Url.Action("AddSign")',
+            type: "POST",
+            data: sign,
+            success: function (data) {
+                alert(data.content);
+                if (data.flag == "1") {
+                    $("#signDetail").modal("hide");
+                }
+            }
+
+        });
+
+    }
+
+
+</script>
