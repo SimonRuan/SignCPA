@@ -1,0 +1,123 @@
+﻿<style type="text/css">
+    * {
+        font-family: MicroSoft YaHei;
+    }
+</style>
+
+<center><button class="btn  btn-success btn-lg" data-toggle="modal" data-target="#signDetail" style="width: 50%; text-align: center; margin-top: 10px; margin-bottom: 5px;">打卡</button></center>
+
+<center><button class="btn btn-info btn-lg" style="width: 50%; text-align: center" onclick="showList()">历史</button></center>
+<div class="modal fade" id="signDetail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    小仙女
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <select id="doneLevelTxt" class="form-control">
+                            <option value="0" style="color: #FF6666"> 一点都没看...</option>
+                            <option value="1" style="color: #FF9999"> 完成了一部分</option>
+                            <option value="2" style="color: #99CC66" selected> 全部完成^_^</option>
+                            <option value="3" style="color: #CCCCFF"> 超额完成了哦!</option>
+                        </select>
+
+                        <textarea id="contentTxt" class="form-control" style="margin-top: 5px" rows="3" placeholder="小仙女辛苦了，记录一下今天的任务吧"></textarea>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="addSign()">
+                    好啦
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+
+</div>
+
+
+<div id="signList" ng-controller="SignListController" style="display: ">
+    skldjflskjdfljjslfjk
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    打卡日期
+                </th>
+                <th>
+                    内容
+                </th>
+
+
+            </tr>
+        </thead>
+        <tr ng-repeat="item in SignList " style="background-color:{{item.Color}}">
+            <td style="vertical-align:middle">
+                {{item.ModifyTime}}
+            </td>
+            <td>
+                {{item.Content}}
+            </td>
+
+        </tr>
+    </table>
+
+</div>
+
+
+<script type="text/javascript">
+
+    //新增打卡记录
+    function addSign() {
+        var doneLevel = $("#doneLevelTxt").val();
+        var content = $("#contentTxt").val();
+        var sign = {};
+        sign.DoneLevel = doneLevel;
+        sign.Content = content;
+
+        $.ajax({
+            url:'@Url.Action("AddSign")',
+            type: "POST",
+            data: sign,
+            success: function (data) {
+                alert(data.content);
+                if (data.flag == "1") {
+                    $("#signDetail").modal("hide");
+                    $("#contentTxt").val("");
+                    $("#doneLevelTxt").val("4");
+                }
+            }
+
+        });
+
+    }
+
+    //显示打卡历史记录
+    function showList() {
+
+    }
+
+    //angular代码部分（表格展示）
+    var APP = angular.module('SignApp', []);
+    APP.controller('SignListController', ['$scope', '$http', '$location', '$filter', function ($scope, $http, $location, $filter) {
+
+        $scope.SignList = [];
+
+        $http({
+            method: 'GET',
+            url: '@Url.Action("GetAllSigns")'
+        }).then(function (res) {
+            $scope.SignList = res.data;
+        }, function (res) {
+            alert(res.Message);
+        });
+    }]);
+</script>

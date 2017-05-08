@@ -32,11 +32,11 @@ namespace SignCPA.DAL
                     var item = new Sign
                     {
                         ID = Int32.Parse(reader["ID"].ToString()),
-                        SignTime =DateTime.Parse(reader["SignTime"].ToString()).ToString("MM月dd号 HH时mm分"),
+                        SignTime =DateTime.Parse(reader["SignTime"].ToString()).ToString("MM月dd号 HH:mm"),
                         DoneLevel = Int32.Parse(reader["DoneLevel"].ToString()),
                         Content = reader["Content"] == null ? "" : reader["Content"].ToString(),
-                        CreateTime = DateTime.Parse(reader["CreateTime"].ToString()).ToString("MM月dd号 HH时mm分"),
-                        ModifyTime = DateTime.Parse(reader["ModifyTime"].ToString()).ToString("MM月dd号 HH时mm分"),
+                        CreateTime = DateTime.Parse(reader["CreateTime"].ToString()).ToString("MM月dd号 HH:mm"),
+                        ModifyTime = DateTime.Parse(reader["ModifyTime"].ToString()).ToString("MM月dd号 HH:mm"),
                         Color = reader["Color"].ToString()
                     };
                     result.Add(item);

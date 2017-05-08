@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>每天进步一点点</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+</head>
+<body ng-app="SignApp">
+    <div id="userSettings">
+        @Html.Partial("_UserSettings")
+    </div>
+
+    <div id="body">
+        @RenderBody()
+    </div>
+
+    <footer></footer>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
