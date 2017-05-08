@@ -8,11 +8,12 @@ namespace SignCPA.Models
     public class Sign
     {
         public int ID { get; set; }
-        public DateTime SignTime { get; set; }
+        public string SignTime { get; set; }
         public int DoneLevel { get; set; }
         public string Content { get; set; }
-        public DateTime CreateTime { get; set; }
-        public DateTime ModifyTime { get; set; }
-        
+        public string CreateTime { get; set; }
+        public string ModifyTime { get; set; }
+
+        public string Color { get; set; }
     }
 }

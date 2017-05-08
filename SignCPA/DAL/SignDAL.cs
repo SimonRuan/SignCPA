@@ -11,7 +11,7 @@ namespace SignCPA.DAL
 {
     public class SignDAL
     {
-        public static SqlConnection conn = new SqlConnection("Data Source=.;Initial Catalog=SignCPA;Integrated Security=True");
+        public static string connStr = "Data Source=.;Initial Catalog=SignCPA;Integrated Security=True";
 
         /// <summary>
         /// 获取所有记录
@@ -21,6 +21,7 @@ namespace SignCPA.DAL
         {
             var result = new List<Sign>();
             string cmdStr = " SELECT * FROM dbo.[Sign](NOLOCK) ORDER BY ModifyTime DESC ";
+            var conn = new SqlConnection(connStr);
             var cmd = new SqlCommand(cmdStr, conn);
             using (conn)
             {
@@ -30,12 +31,13 @@ namespace SignCPA.DAL
                 {
                     var item = new Sign
                     {
-                        ID = (int)reader["ID"],
-                        SignTime = (DateTime)reader["SignTime"],
-                        DoneLevel = (int)reader["DoneLevel"],
+                        ID = Int32.Parse(reader["ID"].ToString()),
+                        SignTime =DateTime.Parse(reader["SignTime"].ToString()).ToString("MM月dd号 HH时mm分"),
+                        DoneLevel = Int32.Parse(reader["DoneLevel"].ToString()),
                         Content = reader["Content"] == null ? "" : reader["Content"].ToString(),
-                        CreateTime = (DateTime)reader["CreateTime"],
-                        ModifyTime = (DateTime)reader["ModifyTime"]
+                        CreateTime = DateTime.Parse(reader["CreateTime"].ToString()).ToString("MM月dd号 HH时mm分"),
+                        ModifyTime = DateTime.Parse(reader["ModifyTime"].ToString()).ToString("MM月dd号 HH时mm分"),
+                        Color = reader["Color"].ToString()
                     };
                     result.Add(item);
                 }
@@ -54,14 +56,16 @@ namespace SignCPA.DAL
             {
                 var result = 0;
                 var sb = new StringBuilder();
-                sb.Append(" INSERT INTO dbo.[Sign] ( [SignTime] , [DoneLevel] , [Content] , [CreateTime] , [ModifyTime] )");
-                sb.Append(" VALUES ( @SignTime , @DoneLevel , @Content , @CreateTime , @ModifyTime )");
+                sb.Append(" INSERT INTO dbo.[Sign] ( [SignTime] , [DoneLevel] , [Content] , [CreateTime] , [ModifyTime] ,[Color])");
+                sb.Append(" VALUES ( @SignTime , @DoneLevel , @Content , @CreateTime , @ModifyTime ,@Color )");
+                var conn = new SqlConnection(connStr);
                 var cmd = new SqlCommand(sb.ToString(), conn);
                 cmd.Parameters.AddWithValue("@SignTime", sign.SignTime);
                 cmd.Parameters.AddWithValue("@DoneLevel", sign.DoneLevel);
                 cmd.Parameters.AddWithValue("@Content", sign.Content);
                 cmd.Parameters.AddWithValue("@CreateTime", sign.CreateTime);
                 cmd.Parameters.AddWithValue("@ModifyTime", sign.ModifyTime);
+                cmd.Parameters.AddWithValue("@Color", sign.Color);
 
                 using (conn)
                 {
@@ -72,7 +76,6 @@ namespace SignCPA.DAL
             }
             catch (Exception e)
             {
-
                 return 0;
             }
         }
